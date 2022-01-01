@@ -1,8 +1,9 @@
 export function parser(text: string): any[] {
   const textList = text.split('」');
+  const sentenceList = [];
 
-  return textList.map(sentence => {
-    if (!sentence.length) {
+  textList.forEach(sentence => {
+    if (!sentence || !sentence.length) {
       return;
     }
 
@@ -11,11 +12,13 @@ export function parser(text: string): any[] {
       const type = sentence.includes('子曰') ? 'left' : 'right';
       const message = sentence.split('曰：「')[1];
 
-      return {
+      sentenceList.push({
         person,
         type,
         message,
-      };
+      });
     }
   });
+
+  return sentenceList;
 };

@@ -12,7 +12,7 @@
 
 		if (res.ok) {
 			const text = await res.text();
-			const data = parser(text.replace('\n', ''));
+			const data = parser(text.replace(/\n/g, ''));
 
 			return {
 				props: {
@@ -34,8 +34,61 @@
 <script lang="ts">
 	export let id = 0;
 	export let title = '';
-	export let data: string;
+	export let data = [];
 </script>
 
 <h1>Analects {id} {title}</h1>
-<p>{JSON.stringify(data)}</p>
+
+<article>
+	<ol class="list">
+		{#each data as item}
+			<li
+				class="bubble"
+				class:left={item.type === 'left'}
+				class:right={item.type === 'right'}
+				class:center={item.type === 'center'}
+			>
+				<strong class="person">{item.person}</strong>
+				<p class="message">
+					{item.message}
+				</p>
+			</li>
+		{/each}
+	</ol>
+</article>
+
+<style>
+	.list {
+		display: flex;
+		flex-direction: column;
+		list-style-type: none;
+	}
+
+	.left {
+		align-self: flex-start;
+	}
+
+	.center {
+		align-self: center;
+	}
+
+	.right {
+		align-self: flex-end;
+	}
+
+	.bubble {
+		align-items: stretch;
+		border: 1px solid;
+		border-radius: 4px;
+		padding: 0.5rem;
+		margin: 0.25rem;
+	}
+
+	.person {
+		font-size: 0.8rem;
+	}
+
+	.message {
+		margin: 0;
+	}
+</style>
