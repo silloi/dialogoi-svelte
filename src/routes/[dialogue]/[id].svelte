@@ -5,8 +5,9 @@
 
 	// see https://kit.svelte.dev/docs#loading
 	export const load: Load = async ({ params, fetch }) => {
+		const dialogue = params.dialogue;
 		const id = params.id;
-		const title = BOOK_TITLE[id];
+		const title = BOOK_TITLE[dialogue][id];
 
 		const res = await fetch(`/data/${id}.txt`);
 

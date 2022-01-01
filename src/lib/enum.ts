@@ -1,3 +1,5 @@
 export const BOOK_TITLE = {
-  1: '學而',
+  analects: {
+    1: '學而',
+  }
 };
