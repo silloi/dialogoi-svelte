@@ -2,13 +2,11 @@
 	import type { Load } from '@sveltejs/kit';
 	import { Bubble, parser } from '$lib/utils';
 	import { CHAPTER_TITLE } from '$lib/enum';
-	import Pagination from '$lib/Pagination.svelte';
 
 	// see https://kit.svelte.dev/docs#loading
 	export const load: Load = async ({ url, params, fetch }) => {
 		const id = params.id;
 		const title = CHAPTER_TITLE.analects[id];
-		const path = url.pathname;
 
 		const res = await fetch(`/data/analects/${id}.txt`);
 
@@ -20,7 +18,6 @@
 				props: {
 					id,
 					title,
-					path,
 					data
 				}
 			};
@@ -60,7 +57,7 @@
 		{/each}
 	</ol>
 </article>
-<Pagination {path} />
+<a href="/analects">論語</a>
 
 <style>
 	.list {
