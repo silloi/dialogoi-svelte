@@ -48,7 +48,9 @@
 				class:right={item.type === 'right'}
 				class:center={item.type === 'center'}
 			>
-				<strong class="person">{item.person}</strong>
+				{#if item.person}
+					<strong class="person">{item.person}</strong>
+				{/if}
 				<p class="message">
 					{item.message}
 				</p>

@@ -16,6 +16,17 @@ export function parser(text: string): Bubble[] {
     if (sentence.includes('曰')) {
       // 1:10 子禽問於子貢 -> 子禽
       const pickOutPerson = (str: string) => {
+        let personOrNot = sentence.split('曰：「')[0];
+
+        if (personOrNot.includes('。')) {
+          const description = personOrNot.split('。')[0];
+          sentenceList.push({
+            type: 'center',
+            message: description,
+          })
+          personOrNot = personOrNot.split('。')[1];
+        }
+
         if (str.includes('問')) {
           return sentence.split('問')[0];
         }
