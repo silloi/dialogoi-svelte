@@ -1,2 +1,6 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Dialogoi</h1>
+<p>The messenger-like representation of ancient scripts</p>
+
+<ul>
+	<li><a href="/analects">論語</a></li>
+</ul>

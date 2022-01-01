@@ -1,13 +1,13 @@
 <script context="module" lang="ts">
 	import type { Load } from '@sveltejs/kit';
 	import { parser } from '$lib/utils';
-	import { BOOK_TITLE } from '$lib/enum';
+	import { BOOK_TITLE, CHAPTER_TITLE } from '$lib/enum';
 
 	// see https://kit.svelte.dev/docs#loading
 	export const load: Load = async ({ params, fetch }) => {
-		const dialogue = params.dialogue;
+		const book = BOOK_TITLE[params.book];
 		const id = params.id;
-		const title = BOOK_TITLE[dialogue][id];
+		const title = CHAPTER_TITLE[params.book][id];
 
 		const res = await fetch(`/data/${id}.txt`);
 
@@ -18,27 +18,29 @@
 			return {
 				props: {
 					id,
+					book,
 					title,
-					data
-				}
+					data,
+				},
 			};
 		}
 
 		const { message } = await res.json();
 
 		return {
-			error: new Error(message)
+			error: new Error(message),
 		};
 	};
 </script>
 
 <script lang="ts">
 	export let id = 0;
+	export let book = '';
 	export let title = '';
 	export let data = [];
 </script>
 
-<h1>Analects {id} {title}</h1>
+<h1>{book} {id} {title}</h1>
 
 <article>
 	<ol class="list">
