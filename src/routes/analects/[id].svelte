@@ -1,15 +1,16 @@
 <script context="module" lang="ts">
 	import type { Load } from '@sveltejs/kit';
-	import { parser } from '$lib/utils';
-	import { BOOK_TITLE, CHAPTER_TITLE } from '$lib/enum';
+	import { Bubble, parser } from '$lib/utils';
+	import { CHAPTER_TITLE } from '$lib/enum';
+	import Pagination from '$lib/Pagination.svelte';
 
 	// see https://kit.svelte.dev/docs#loading
-	export const load: Load = async ({ params, fetch }) => {
-		const book = BOOK_TITLE[params.book];
+	export const load: Load = async ({ url, params, fetch }) => {
 		const id = params.id;
-		const title = CHAPTER_TITLE[params.book][id];
+		const title = CHAPTER_TITLE.analects[id];
+		const path = url.pathname;
 
-		const res = await fetch(`/data/${id}.txt`);
+		const res = await fetch(`/data/analects/${id}.txt`);
 
 		if (res.ok) {
 			const text = await res.text();
@@ -18,29 +19,29 @@
 			return {
 				props: {
 					id,
-					book,
 					title,
-					data,
-				},
+					path,
+					data
+				}
 			};
 		}
 
 		const { message } = await res.json();
 
 		return {
-			error: new Error(message),
+			error: new Error(message)
 		};
 	};
 </script>
 
 <script lang="ts">
 	export let id = 0;
-	export let book = '';
 	export let title = '';
-	export let data = [];
+	export let path = '';
+	export let data: Bubble[] = [];
 </script>
 
-<h1>{book} {id} {title}</h1>
+<h1>論語 {id} {title}</h1>
 
 <article>
 	<ol class="list">
@@ -59,6 +60,7 @@
 		{/each}
 	</ol>
 </article>
+<Pagination {path} />
 
 <style>
 	.list {

@@ -1,4 +1,10 @@
-export function parser(text: string): any[] {
+export type Bubble = {
+  person?: string;
+  type?: string;
+  message: string;
+}
+
+export function parser(text: string): Bubble[] {
   const textList = text.split('」');
   const sentenceList = [];
 
