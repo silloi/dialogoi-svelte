@@ -1,30 +1,41 @@
 <script context="module" lang="ts">
-  import type { Load } from '@sveltejs/kit';
+	import type { Load } from '@sveltejs/kit';
+	import { parser } from '$lib/utils';
+	import { BOOK_TITLE } from '$lib/enum';
 
-  // see https://kit.svelte.dev/docs#loading
-  export const load: Load = async ({ params, fetch }) => {
-    const res = await fetch(`/data/${params.id}.txt`);
+	// see https://kit.svelte.dev/docs#loading
+	export const load: Load = async ({ params, fetch }) => {
+		const id = params.id;
+		const title = BOOK_TITLE[id];
 
-    if (res.ok) {
-      const data = await res.text();
+		const res = await fetch(`/data/${id}.txt`);
 
-        return {
-          props: { data }
-        };
-    }
+		if (res.ok) {
+			const text = await res.text();
+			const data = parser(text.replace('\n', ''));
 
-    const { message } = await res.json();
+			return {
+				props: {
+					id,
+					title,
+					data
+				}
+			};
+		}
 
-    return {
-      error: new Error(message)
-    };
-  };
+		const { message } = await res.json();
+
+		return {
+			error: new Error(message)
+		};
+	};
 </script>
 
 <script lang="ts">
-  export let name = 'gakuji';
-  export let data: string;
+	export let id = 0;
+	export let title = '';
+	export let data: string;
 </script>
 
-<h1>Analects {name}</h1>
-<p>{data}</p>
+<h1>Analects {id} {title}</h1>
+<p>{JSON.stringify(data)}</p>
