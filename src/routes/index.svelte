@@ -1,4 +1,4 @@
-<h1>Dialogoi</h1>
+<h1>DIALOGOI</h1>
 <p>The messenger-like representation of ancient scripts</p>
 
 <ul>

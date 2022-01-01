@@ -1,5 +1,6 @@
 <nav>
 	<a href="/">Home</a>
+	<a href="/analects">論語</a>
 </nav>
 
 <div class="layout">
