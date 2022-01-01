@@ -8,7 +8,16 @@ export function parser(text: string): any[] {
     }
 
     if (sentence.includes('曰')) {
-      const person = sentence.split('曰：「')[0];
+      // 1:10 子禽問於子貢 -> 子禽
+      const pickOutPerson = (str: string) => {
+        if (str.includes('問')) {
+          return sentence.split('問')[0];
+        }
+
+        return sentence.split('曰：「')[0];
+      }
+
+      const person = pickOutPerson(sentence);
       const type = sentence.includes('子曰') ? 'left' : 'right';
       const message = sentence.split('曰：「')[1];
 
