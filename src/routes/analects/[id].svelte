@@ -34,7 +34,6 @@
 <script lang="ts">
 	export let id = 0;
 	export let title = '';
-	export let path = '';
 	export let data: Bubble[] = [];
 </script>
 
